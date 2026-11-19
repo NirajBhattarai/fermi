@@ -1,0 +1,244 @@
+{
+  "version": 6,
+  "randomSeed": "fermiscurveusdc",
+  "graph": {
+    "viewport": {
+      "xmin": 100,
+      "ymin": -0.1,
+      "xmax": 300,
+      "ymax": 1.2
+    },
+    "xAxisLabel": "normalised USDC reserve r = x / w",
+    "yAxisLabel": "f'(r) = points per USDC",
+    "squareAxes": false,
+    "showGrid": true
+  },
+  "expressions": {
+    "list": [
+      {
+        "type": "text",
+        "id": "title",
+        "text": "USDC Fermi S-curve from the fermi-from-scratch example. Pool V=160, USDC weight w=0.625 (raw reserve 100), budget b=40%. Then c=V(1+b)=224, T=(c-V)/10=6.4. Horizontal axis is normalised reserve r=x/w (at target r=V=160). Absolute wall = w*c = 140 USDC."
+      },
+      {
+        "type": "folder",
+        "id": "params",
+        "title": "USDC parameters (derived)",
+        "collapsed": false
+      },
+      {
+        "type": "expression",
+        "id": "V",
+        "folderId": "params",
+        "color": "#000000",
+        "latex": "V=160",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "50",
+          "max": "500",
+          "step": "10"
+        }
+      },
+      {
+        "type": "expression",
+        "id": "w",
+        "folderId": "params",
+        "color": "#000000",
+        "latex": "w=0.625",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "0.1",
+          "max": "0.9",
+          "step": "0.025"
+        }
+      },
+      {
+        "type": "expression",
+        "id": "b",
+        "folderId": "params",
+        "color": "#c01c28",
+        "latex": "b=0.4",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "0.05",
+          "max": "1",
+          "step": "0.05"
+        }
+      },
+      {
+        "type": "expression",
+        "id": "R",
+        "folderId": "params",
+        "color": "#000000",
+        "latex": "R=10",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "3",
+          "max": "30",
+          "step": "1"
+        }
+      },
+      {
+        "type": "expression",
+        "id": "c",
+        "folderId": "params",
+        "color": "#c01c28",
+        "latex": "c=V\\left(1+b\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "T",
+        "folderId": "params",
+        "color": "#c01c28",
+        "latex": "T=\\frac{c-V}{R}"
+      },
+      {
+        "type": "expression",
+        "id": "x0",
+        "folderId": "params",
+        "color": "#26a269",
+        "latex": "x_{0}=w\\cdot V"
+      },
+      {
+        "type": "expression",
+        "id": "wall",
+        "folderId": "params",
+        "color": "#c01c28",
+        "latex": "L=w\\cdot c"
+      },
+      {
+        "type": "folder",
+        "id": "slope",
+        "title": "S-curve f'(r)",
+        "collapsed": false
+      },
+      {
+        "type": "expression",
+        "id": "s",
+        "folderId": "slope",
+        "color": "#26a269",
+        "lineWidth": "4",
+        "latex": "s\\left(r\\right)=\\frac{1}{1+e^{\\frac{r-c}{T}}}"
+      },
+      {
+        "type": "expression",
+        "id": "scurve",
+        "folderId": "slope",
+        "color": "#26a269",
+        "lineWidth": "5",
+        "latex": "y=s\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "capline",
+        "folderId": "slope",
+        "color": "#c01c28",
+        "lineStyle": "DASHED",
+        "lineWidth": "2.5",
+        "latex": "x=c"
+      },
+      {
+        "type": "expression",
+        "id": "peglines",
+        "folderId": "slope",
+        "color": "#26a269",
+        "lineStyle": "DOTTED",
+        "lineWidth": "2",
+        "latex": "x=V"
+      },
+      {
+        "type": "expression",
+        "id": "half",
+        "folderId": "slope",
+        "color": "#c01c28",
+        "lineStyle": "DOTTED",
+        "lineWidth": "1.5",
+        "latex": "y=0.5"
+      },
+      {
+        "type": "expression",
+        "id": "pegpoint",
+        "folderId": "slope",
+        "color": "#26a269",
+        "latex": "\\left(V,s\\left(V\\right)\\right)",
+        "pointSize": "14",
+        "label": "target: r=V=160, raw USDC=100, f'≈1",
+        "showLabel": true,
+        "labelOrientation": "above"
+      },
+      {
+        "type": "expression",
+        "id": "cappoint",
+        "folderId": "slope",
+        "color": "#c01c28",
+        "latex": "\\left(c,0.5\\right)",
+        "pointSize": "14",
+        "label": "cap c=224 → wall L=w·c=140 USDC",
+        "showLabel": true,
+        "labelOrientation": "right"
+      },
+      {
+        "type": "expression",
+        "id": "junkpoint",
+        "folderId": "slope",
+        "color": "#e5a50a",
+        "latex": "\\left(c+10T,s\\left(c+10T\\right)\\right)",
+        "pointSize": "12",
+        "label": "junk: f'≈0",
+        "showLabel": true,
+        "labelOrientation": "above"
+      },
+      {
+        "type": "folder",
+        "id": "readout",
+        "title": "Readout (absolute USDC)",
+        "collapsed": false
+      },
+      {
+        "type": "text",
+        "id": "readouttext",
+        "folderId": "readout",
+        "text": "x0 = raw USDC at target. L = absolute wall (max USDC near 1:1). Room = L - x0. Drag b to tighten/loosen USDC risk; c and T update automatically."
+      },
+      {
+        "type": "expression",
+        "id": "showx0",
+        "folderId": "readout",
+        "color": "#26a269",
+        "latex": "x_{0}"
+      },
+      {
+        "type": "expression",
+        "id": "showL",
+        "folderId": "readout",
+        "color": "#c01c28",
+        "latex": "L"
+      },
+      {
+        "type": "expression",
+        "id": "showroom",
+        "folderId": "readout",
+        "color": "#e5a50a",
+        "latex": "L-x_{0}"
+      },
+      {
+        "type": "expression",
+        "id": "showc",
+        "folderId": "readout",
+        "color": "#c01c28",
+        "latex": "c"
+      },
+      {
+        "type": "expression",
+        "id": "showT",
+        "folderId": "readout",
+        "color": "#c01c28",
+        "latex": "T"
+      }
+    ]
+  }
+}

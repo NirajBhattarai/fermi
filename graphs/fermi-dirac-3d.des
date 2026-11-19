@@ -1,0 +1,212 @@
+{
+  "version": 11,
+  "randomSeed": "fermidirac3d",
+  "graph": {
+    "viewport": {
+      "xmin": 8,
+      "xmax": 18,
+      "ymin": 8,
+      "ymax": 18,
+      "zmin": 3,
+      "zmax": 11
+    },
+    "squareAxes": false,
+    "product": "graphing-3d",
+    "threeDMode": true
+  },
+  "expressions": {
+    "list": [
+      {
+        "type": "text",
+        "id": "title",
+        "text": "Fermi-Dirac AMM, n=3. Invariant f(x1)+f(x2)+f(x3)=3f(xm), f(x)=-T ln(1+e^((c-x)/T)). Axes x,y are two reserves; the green surface is the third. Peg (10,10,10). Dump coin 1 alone: z settles at 7, pool paid c-xm=3. Dump coins 1 and 2: z floors on the red plane z=4, pool paid 2(c-xm)=6 however much arrives. Fermi cap = (depegged coins) x (c-xm), independent of n. The blue flat-band surface (hidden) floors at xm-w-v=5 per GOOD coin, so its cap is (n-1) x 5 and grows with n."
+      },
+      {
+        "type": "folder",
+        "id": "params",
+        "title": "Parameters"
+      },
+      {
+        "type": "expression",
+        "id": "xm",
+        "folderId": "params",
+        "color": "#000000",
+        "latex": "x_{m}=10",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "8",
+          "max": "12",
+          "step": "0.5"
+        }
+      },
+      {
+        "type": "expression",
+        "id": "c",
+        "folderId": "params",
+        "color": "#26a269",
+        "latex": "c=13",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "x_{m}+0.5",
+          "max": "x_{m}+8",
+          "step": "0.1"
+        }
+      },
+      {
+        "type": "expression",
+        "id": "T",
+        "folderId": "params",
+        "color": "#26a269",
+        "latex": "T=0.3",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "0.1",
+          "max": "2",
+          "step": "0.05"
+        }
+      },
+      {
+        "type": "folder",
+        "id": "math",
+        "title": "f, its inverse g, the invariant level K"
+      },
+      {
+        "type": "expression",
+        "id": "f",
+        "folderId": "math",
+        "color": "#26a269",
+        "latex": "f(a)=-T\\ln(1+e^{(c-a)/T})",
+        "hidden": true
+      },
+      {
+        "type": "expression",
+        "id": "g",
+        "folderId": "math",
+        "color": "#26a269",
+        "latex": "g(u)=c-T\\ln(e^{-u/T}-1)",
+        "hidden": true
+      },
+      {
+        "type": "expression",
+        "id": "K",
+        "folderId": "math",
+        "color": "#26a269",
+        "latex": "K=3f(x_{m})"
+      },
+      {
+        "type": "folder",
+        "id": "surf",
+        "title": "Fermi-Dirac bonding surface"
+      },
+      {
+        "type": "expression",
+        "id": "fdsurf",
+        "folderId": "surf",
+        "color": "#26a269",
+        "latex": "z=g(K-f(x)-f(y))"
+      },
+      {
+        "type": "expression",
+        "id": "floor",
+        "folderId": "surf",
+        "color": "#c01c28",
+        "latex": "z=g(K)"
+      },
+      {
+        "type": "expression",
+        "id": "floorval",
+        "folderId": "surf",
+        "color": "#c01c28",
+        "latex": "z_{floor}=g(K)"
+      },
+      {
+        "type": "expression",
+        "id": "peg",
+        "folderId": "surf",
+        "color": "#000000",
+        "latex": "(x_{m},x_{m},x_{m})",
+        "pointSize": "9"
+      },
+      {
+        "type": "expression",
+        "id": "p1",
+        "folderId": "surf",
+        "color": "#e08f00",
+        "latex": "(18,x_{m},g(K-f(18)-f(x_{m})))",
+        "pointSize": "9"
+      },
+      {
+        "type": "expression",
+        "id": "p2",
+        "folderId": "surf",
+        "color": "#c01c28",
+        "latex": "(18,18,g(K-f(18)-f(18)))",
+        "pointSize": "9"
+      },
+      {
+        "type": "folder",
+        "id": "cmp",
+        "title": "Flat band, same peg (unhide to compare)"
+      },
+      {
+        "type": "expression",
+        "id": "w",
+        "folderId": "cmp",
+        "color": "#1a5fb4",
+        "latex": "w=2",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "0.4",
+          "max": "6",
+          "step": "0.1"
+        }
+      },
+      {
+        "type": "expression",
+        "id": "v",
+        "folderId": "cmp",
+        "color": "#1a5fb4",
+        "latex": "v=3",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "0.5",
+          "max": "8",
+          "step": "0.1"
+        }
+      },
+      {
+        "type": "expression",
+        "id": "fb",
+        "folderId": "cmp",
+        "color": "#1a5fb4",
+        "latex": "f_{b}(a)=\\left\\{a<x_{m}-w:x_{m}-w+v\\ln((a-x_{m}+w+v)/v),a\\le x_{m}+w:a,x_{m}+w+v\\ln((a-x_{m}-w+v)/v)\\right\\}",
+        "hidden": true
+      },
+      {
+        "type": "expression",
+        "id": "gb",
+        "folderId": "cmp",
+        "color": "#1a5fb4",
+        "latex": "g_{b}(u)=\\left\\{u<x_{m}-w:x_{m}-w-v+ve^{(u-x_{m}+w)/v},u\\le x_{m}+w:u,x_{m}+w-v+ve^{(u-x_{m}-w)/v}\\right\\}",
+        "hidden": true
+      },
+      {
+        "type": "expression",
+        "id": "fbsurf",
+        "folderId": "cmp",
+        "color": "#1a5fb4",
+        "latex": "z=g_{b}(3x_{m}-f_{b}(x)-f_{b}(y))",
+        "hidden": true
+      }
+    ]
+  },
+  "includeFunctionParametersInRandomSeed": true,
+  "doNotMigrate3dLineWidthZero": true,
+  "doNotMigrateMovablePointStyle": true,
+  "backmigrated": 14
+}

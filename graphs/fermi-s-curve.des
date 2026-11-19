@@ -1,0 +1,175 @@
+{
+  "version": 6,
+  "randomSeed": "fermiscurve",
+  "graph": {
+    "viewport": {
+      "xmin": 0,
+      "ymin": -0.1,
+      "xmax": 25,
+      "ymax": 1.2
+    },
+    "xAxisLabel": "reserve x of one token",
+    "yAxisLabel": "f'(x) = points per coin",
+    "squareAxes": false,
+    "showGrid": true
+  },
+  "expressions": {
+    "list": [
+      {
+        "type": "text",
+        "id": "title",
+        "text": "Single-token Fermi–Dirac S-curve. f'(x) = 1/(1+e^((x-c)/T)). x = how much of this coin the pool holds. c = cap (half value). T = sharpness (small T = cliff). Drag c and T. The green curve is the slope; the orange curve is f(x) itself (rescaled)."
+      },
+      {
+        "type": "folder",
+        "id": "params",
+        "title": "Parameters",
+        "collapsed": false
+      },
+      {
+        "type": "expression",
+        "id": "c",
+        "folderId": "params",
+        "color": "#c01c28",
+        "latex": "c=13",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "5",
+          "max": "20",
+          "step": "0.1"
+        }
+      },
+      {
+        "type": "expression",
+        "id": "T",
+        "folderId": "params",
+        "color": "#c01c28",
+        "latex": "T=0.3",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "0.1",
+          "max": "2",
+          "step": "0.05"
+        }
+      },
+      {
+        "type": "expression",
+        "id": "xm",
+        "folderId": "params",
+        "color": "#000000",
+        "latex": "x_{m}=10",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "5",
+          "max": "15",
+          "step": "0.5"
+        }
+      },
+      {
+        "type": "folder",
+        "id": "slope",
+        "title": "S-curve = slope f'(x)",
+        "collapsed": false
+      },
+      {
+        "type": "expression",
+        "id": "s",
+        "folderId": "slope",
+        "color": "#26a269",
+        "lineWidth": "4",
+        "latex": "s\\left(x\\right)=\\frac{1}{1+e^{\\frac{x-c}{T}}}"
+      },
+      {
+        "type": "expression",
+        "id": "scurve",
+        "folderId": "slope",
+        "color": "#26a269",
+        "lineWidth": "5",
+        "latex": "y=s\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "capline",
+        "folderId": "slope",
+        "color": "#c01c28",
+        "lineStyle": "DASHED",
+        "lineWidth": "2.5",
+        "latex": "x=c"
+      },
+      {
+        "type": "expression",
+        "id": "half",
+        "folderId": "slope",
+        "color": "#c01c28",
+        "lineStyle": "DOTTED",
+        "lineWidth": "1.5",
+        "latex": "y=0.5"
+      },
+      {
+        "type": "expression",
+        "id": "cappoint",
+        "folderId": "slope",
+        "color": "#c01c28",
+        "latex": "\\left(c,0.5\\right)",
+        "pointSize": "14",
+        "label": "cap: f'=0.5",
+        "showLabel": true,
+        "labelOrientation": "right"
+      },
+      {
+        "type": "expression",
+        "id": "pegpoint",
+        "folderId": "slope",
+        "color": "#26a269",
+        "latex": "\\left(x_{m},s\\left(x_{m}\\right)\\right)",
+        "pointSize": "12",
+        "label": "peg: nearly 1",
+        "showLabel": true,
+        "labelOrientation": "above"
+      },
+      {
+        "type": "expression",
+        "id": "junkpoint",
+        "folderId": "slope",
+        "color": "#e5a50a",
+        "latex": "\\left(c+10T,s\\left(c+10T\\right)\\right)",
+        "pointSize": "12",
+        "label": "junk: nearly 0",
+        "showLabel": true,
+        "labelOrientation": "above"
+      },
+      {
+        "type": "folder",
+        "id": "transform",
+        "title": "f(x) itself (optional)",
+        "collapsed": true
+      },
+      {
+        "type": "expression",
+        "id": "f",
+        "folderId": "transform",
+        "color": "#e5a50a",
+        "hidden": true,
+        "latex": "f\\left(x\\right)=-T\\ln\\left(1+e^{\\frac{c-x}{T}}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "fcurve",
+        "folderId": "transform",
+        "color": "#e5a50a",
+        "hidden": true,
+        "lineWidth": "3",
+        "latex": "y=f\\left(x\\right)"
+      },
+      {
+        "type": "text",
+        "id": "hint",
+        "folderId": "transform",
+        "text": "Unhide y=f(x) above, then zoom y-axis down (f is negative). Or keep it hidden and just look at the green S-curve."
+      }
+    ]
+  }
+}

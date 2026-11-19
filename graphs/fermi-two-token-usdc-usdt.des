@@ -1,0 +1,362 @@
+{
+  "version": 6,
+  "randomSeed": "fermitwotoken",
+  "graph": {
+    "viewport": {
+      "xmin": 0,
+      "ymin": -0.1,
+      "xmax": 200,
+      "ymax": 1.2
+    },
+    "xAxisLabel": "raw reserve (USDC or USDT dollars)",
+    "yAxisLabel": "f' = points per coin  (or switch folder to bonding curve)",
+    "squareAxes": false,
+    "showGrid": true
+  },
+  "expressions": {
+    "list": [
+      {
+        "type": "text",
+        "id": "title",
+        "text": "Two-token Fermi: USDC + USDT. Pool V=150 (100 USDC + 50 USDT), both budgets b=40%, R=10. Same normalised cap c=210, T=6 — but absolute walls differ: USDC wall=140, USDT wall=70. Folder A = two S-curves. Folder B = bonding curve (dump one, other falls)."
+      },
+      {
+        "type": "folder",
+        "id": "params",
+        "title": "Parameters",
+        "collapsed": false
+      },
+      {
+        "type": "expression",
+        "id": "V",
+        "folderId": "params",
+        "color": "#000000",
+        "latex": "V=150"
+      },
+      {
+        "type": "expression",
+        "id": "b",
+        "folderId": "params",
+        "color": "#c01c28",
+        "latex": "b=0.4",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "0.05",
+          "max": "1",
+          "step": "0.05"
+        }
+      },
+      {
+        "type": "expression",
+        "id": "R",
+        "folderId": "params",
+        "color": "#000000",
+        "latex": "R=10",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "3",
+          "max": "30",
+          "step": "1"
+        }
+      },
+      {
+        "type": "expression",
+        "id": "w1",
+        "folderId": "params",
+        "color": "#26a269",
+        "latex": "w_{1}=\\frac{2}{3}"
+      },
+      {
+        "type": "expression",
+        "id": "w2",
+        "folderId": "params",
+        "color": "#1c71d8",
+        "latex": "w_{2}=\\frac{1}{3}"
+      },
+      {
+        "type": "expression",
+        "id": "c",
+        "folderId": "params",
+        "color": "#c01c28",
+        "latex": "c=V\\left(1+b\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "T",
+        "folderId": "params",
+        "color": "#c01c28",
+        "latex": "T=\\frac{c-V}{R}"
+      },
+      {
+        "type": "expression",
+        "id": "L1",
+        "folderId": "params",
+        "color": "#26a269",
+        "latex": "L_{1}=w_{1}\\cdot c"
+      },
+      {
+        "type": "expression",
+        "id": "L2",
+        "folderId": "params",
+        "color": "#1c71d8",
+        "latex": "L_{2}=w_{2}\\cdot c"
+      },
+      {
+        "type": "expression",
+        "id": "x10",
+        "folderId": "params",
+        "color": "#26a269",
+        "latex": "x_{1}=w_{1}\\cdot V"
+      },
+      {
+        "type": "expression",
+        "id": "x20",
+        "folderId": "params",
+        "color": "#1c71d8",
+        "latex": "x_{2}=w_{2}\\cdot V"
+      },
+      {
+        "type": "folder",
+        "id": "math",
+        "title": "f, g, slopes",
+        "collapsed": true
+      },
+      {
+        "type": "expression",
+        "id": "f",
+        "folderId": "math",
+        "color": "#000000",
+        "hidden": true,
+        "latex": "f\\left(r\\right)=-T\\ln\\left(1+e^{\\frac{c-r}{T}}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "g",
+        "folderId": "math",
+        "color": "#000000",
+        "hidden": true,
+        "latex": "g\\left(u\\right)=c-T\\ln\\left(e^{\\frac{-u}{T}}-1\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "s1",
+        "folderId": "math",
+        "color": "#26a269",
+        "hidden": true,
+        "latex": "s_{1}\\left(x\\right)=\\frac{1}{1+e^{\\frac{\\frac{x}{w_{1}}-c}{T}}}"
+      },
+      {
+        "type": "expression",
+        "id": "s2",
+        "folderId": "math",
+        "color": "#1c71d8",
+        "hidden": true,
+        "latex": "s_{2}\\left(x\\right)=\\frac{1}{1+e^{\\frac{\\frac{x}{w_{2}}-c}{T}}}"
+      },
+      {
+        "type": "expression",
+        "id": "K",
+        "folderId": "math",
+        "color": "#000000",
+        "hidden": true,
+        "latex": "K=w_{1}f\\left(V\\right)+w_{2}f\\left(V\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "yofx",
+        "folderId": "math",
+        "color": "#1c71d8",
+        "hidden": true,
+        "latex": "Y\\left(x\\right)=w_{2}\\cdot g\\left(\\frac{K-w_{1}f\\left(\\frac{x}{w_{1}}\\right)}{w_{2}}\\right)"
+      },
+      {
+        "type": "folder",
+        "id": "scurves",
+        "title": "A — Two S-curves (points vs raw reserve)",
+        "collapsed": false
+      },
+      {
+        "type": "text",
+        "id": "scurvestext",
+        "folderId": "scurves",
+        "text": "Green = USDC. Blue = USDT. Same shape in normalised space; USDT hits junk sooner in dollars because its wall is only 70."
+      },
+      {
+        "type": "expression",
+        "id": "curve1",
+        "folderId": "scurves",
+        "color": "#26a269",
+        "lineWidth": "5",
+        "latex": "y=s_{1}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "curve2",
+        "folderId": "scurves",
+        "color": "#1c71d8",
+        "lineWidth": "5",
+        "latex": "y=s_{2}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "wall1",
+        "folderId": "scurves",
+        "color": "#26a269",
+        "lineStyle": "DASHED",
+        "lineWidth": "2",
+        "latex": "x=L_{1}"
+      },
+      {
+        "type": "expression",
+        "id": "wall2",
+        "folderId": "scurves",
+        "color": "#1c71d8",
+        "lineStyle": "DASHED",
+        "lineWidth": "2",
+        "latex": "x=L_{2}"
+      },
+      {
+        "type": "expression",
+        "id": "half",
+        "folderId": "scurves",
+        "color": "#c01c28",
+        "lineStyle": "DOTTED",
+        "lineWidth": "1.5",
+        "latex": "y=0.5"
+      },
+      {
+        "type": "expression",
+        "id": "peg1",
+        "folderId": "scurves",
+        "color": "#26a269",
+        "latex": "\\left(x_{1},s_{1}\\left(x_{1}\\right)\\right)",
+        "pointSize": "12",
+        "label": "USDC target 100",
+        "showLabel": true,
+        "labelOrientation": "above"
+      },
+      {
+        "type": "expression",
+        "id": "peg2",
+        "folderId": "scurves",
+        "color": "#1c71d8",
+        "latex": "\\left(x_{2},s_{2}\\left(x_{2}\\right)\\right)",
+        "pointSize": "12",
+        "label": "USDT target 50",
+        "showLabel": true,
+        "labelOrientation": "below"
+      },
+      {
+        "type": "expression",
+        "id": "cap1",
+        "folderId": "scurves",
+        "color": "#26a269",
+        "latex": "\\left(L_{1},0.5\\right)",
+        "pointSize": "12",
+        "label": "USDC wall 140",
+        "showLabel": true,
+        "labelOrientation": "right"
+      },
+      {
+        "type": "expression",
+        "id": "cap2",
+        "folderId": "scurves",
+        "color": "#1c71d8",
+        "latex": "\\left(L_{2},0.5\\right)",
+        "pointSize": "12",
+        "label": "USDT wall 70",
+        "showLabel": true,
+        "labelOrientation": "left"
+      },
+      {
+        "type": "folder",
+        "id": "bond",
+        "title": "B — Bonding curve (hide A first; zoom y to 0–160)",
+        "collapsed": true
+      },
+      {
+        "type": "text",
+        "id": "bondtext",
+        "folderId": "bond",
+        "text": "Unhide y=Y(x) below. x = USDC in the pool, y = USDT left. Start at (100,50). As USDC is dumped, USDT falls then floors — that is the loss cap."
+      },
+      {
+        "type": "expression",
+        "id": "bondcurve",
+        "folderId": "bond",
+        "color": "#e5a50a",
+        "hidden": true,
+        "lineWidth": "5",
+        "latex": "y=Y\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "bondpeg",
+        "folderId": "bond",
+        "color": "#e5a50a",
+        "hidden": true,
+        "latex": "\\left(x_{1},x_{2}\\right)",
+        "pointSize": "14",
+        "label": "peg (100, 50)",
+        "showLabel": true,
+        "labelOrientation": "right"
+      },
+      {
+        "type": "expression",
+        "id": "bondfloor",
+        "folderId": "bond",
+        "color": "#c01c28",
+        "hidden": true,
+        "lineStyle": "DASHED",
+        "lineWidth": "2",
+        "latex": "y=w_{2}\\cdot g\\left(\\frac{K}{w_{2}}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "bondwall",
+        "folderId": "bond",
+        "color": "#26a269",
+        "hidden": true,
+        "lineStyle": "DOTTED",
+        "lineWidth": "2",
+        "latex": "x=L_{1}"
+      },
+      {
+        "type": "folder",
+        "id": "readout",
+        "title": "Readout",
+        "collapsed": false
+      },
+      {
+        "type": "expression",
+        "id": "showc",
+        "folderId": "readout",
+        "color": "#c01c28",
+        "latex": "c"
+      },
+      {
+        "type": "expression",
+        "id": "showT",
+        "folderId": "readout",
+        "color": "#c01c28",
+        "latex": "T"
+      },
+      {
+        "type": "expression",
+        "id": "showL1",
+        "folderId": "readout",
+        "color": "#26a269",
+        "latex": "L_{1}"
+      },
+      {
+        "type": "expression",
+        "id": "showL2",
+        "folderId": "readout",
+        "color": "#1c71d8",
+        "latex": "L_{2}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,842 @@
+{
+  "version": 6,
+  "randomSeed": "fermi10stableslive",
+  "graph": {
+    "viewport": {
+      "xmin": 900,
+      "ymin": -0.1,
+      "xmax": 1600,
+      "ymax": 1.2
+    },
+    "xAxisLabel": "normalised reserve r = x/w  (target V=1000)",
+    "yAxisLabel": "f'(r) = points per coin",
+    "squareAxes": false,
+    "showGrid": true
+  },
+  "expressions": {
+    "list": [
+      {
+        "type": "text",
+        "id": "title",
+        "text": "10 live stables (DefiLlama 2026-11-18). Weights ∝ market cap. Pool scale V=$1000M toy TVL. Budgets by trust: USDT/USDC 40%; USDS/DAI/RLUSD/PYUSD 30%; USD1/USDG 20%; USDe/U 10%. R=10 for all. Folder A = S-curves in normalised r. Folder B = same curves vs absolute $. Source: defillama.com/stablecoins"
+      },
+      {
+        "type": "folder",
+        "id": "params",
+        "title": "Shared params",
+        "collapsed": false
+      },
+      {
+        "type": "expression",
+        "id": "V",
+        "folderId": "params",
+        "color": "#000000",
+        "latex": "V=1000"
+      },
+      {
+        "type": "expression",
+        "id": "R",
+        "folderId": "params",
+        "color": "#000000",
+        "latex": "R=10",
+        "slider": {
+          "hardMin": true,
+          "hardMax": true,
+          "min": "3",
+          "max": "30",
+          "step": "1"
+        }
+      },
+      {
+        "type": "folder",
+        "id": "weights",
+        "title": "Weights from mcap (DefiLlama)",
+        "collapsed": true
+      },
+      {
+        "type": "expression",
+        "id": "w1",
+        "folderId": "weights",
+        "color": "#26a269",
+        "latex": "w_{1}=0.6450"
+      },
+      {
+        "type": "expression",
+        "id": "w2",
+        "folderId": "weights",
+        "color": "#1c71d8",
+        "latex": "w_{2}=0.2552"
+      },
+      {
+        "type": "expression",
+        "id": "w3",
+        "folderId": "weights",
+        "color": "#613583",
+        "latex": "w_{3}=0.0193"
+      },
+      {
+        "type": "expression",
+        "id": "w4",
+        "folderId": "weights",
+        "color": "#e66100",
+        "latex": "w_{4}=0.0178"
+      },
+      {
+        "type": "expression",
+        "id": "w5",
+        "folderId": "weights",
+        "color": "#c01c28",
+        "latex": "w_{5}=0.0170"
+      },
+      {
+        "type": "expression",
+        "id": "w6",
+        "folderId": "weights",
+        "color": "#e5a50a",
+        "latex": "w_{6}=0.0108"
+      },
+      {
+        "type": "expression",
+        "id": "w7",
+        "folderId": "weights",
+        "color": "#62a0ea",
+        "latex": "w_{7}=0.0103"
+      },
+      {
+        "type": "expression",
+        "id": "w8",
+        "folderId": "weights",
+        "color": "#57e389",
+        "latex": "w_{8}=0.0096"
+      },
+      {
+        "type": "expression",
+        "id": "w9",
+        "folderId": "weights",
+        "color": "#f66151",
+        "latex": "w_{9}=0.0091"
+      },
+      {
+        "type": "expression",
+        "id": "w10",
+        "folderId": "weights",
+        "color": "#99c1f1",
+        "latex": "w_{10}=0.0059"
+      },
+      {
+        "type": "folder",
+        "id": "budgets",
+        "title": "Budgets b_i (trust tiers)",
+        "collapsed": true
+      },
+      {
+        "type": "expression",
+        "id": "b1",
+        "folderId": "budgets",
+        "color": "#26a269",
+        "latex": "b_{1}=0.40"
+      },
+      {
+        "type": "expression",
+        "id": "b2",
+        "folderId": "budgets",
+        "color": "#1c71d8",
+        "latex": "b_{2}=0.40"
+      },
+      {
+        "type": "expression",
+        "id": "b3",
+        "folderId": "budgets",
+        "color": "#613583",
+        "latex": "b_{3}=0.30"
+      },
+      {
+        "type": "expression",
+        "id": "b4",
+        "folderId": "budgets",
+        "color": "#e66100",
+        "latex": "b_{4}=0.10"
+      },
+      {
+        "type": "expression",
+        "id": "b5",
+        "folderId": "budgets",
+        "color": "#c01c28",
+        "latex": "b_{5}=0.30"
+      },
+      {
+        "type": "expression",
+        "id": "b6",
+        "folderId": "budgets",
+        "color": "#e5a50a",
+        "latex": "b_{6}=0.20"
+      },
+      {
+        "type": "expression",
+        "id": "b7",
+        "folderId": "budgets",
+        "color": "#62a0ea",
+        "latex": "b_{7}=0.30"
+      },
+      {
+        "type": "expression",
+        "id": "b8",
+        "folderId": "budgets",
+        "color": "#57e389",
+        "latex": "b_{8}=0.20"
+      },
+      {
+        "type": "expression",
+        "id": "b9",
+        "folderId": "budgets",
+        "color": "#f66151",
+        "latex": "b_{9}=0.30"
+      },
+      {
+        "type": "expression",
+        "id": "b10",
+        "folderId": "budgets",
+        "color": "#99c1f1",
+        "latex": "b_{10}=0.10"
+      },
+      {
+        "type": "folder",
+        "id": "derived",
+        "title": "Derived c_i, T_i, walls L_i",
+        "collapsed": true
+      },
+      {
+        "type": "expression",
+        "id": "c1",
+        "folderId": "derived",
+        "color": "#26a269",
+        "latex": "c_{1}=V\\left(1+b_{1}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "c2",
+        "folderId": "derived",
+        "color": "#1c71d8",
+        "latex": "c_{2}=V\\left(1+b_{2}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "c3",
+        "folderId": "derived",
+        "color": "#613583",
+        "latex": "c_{3}=V\\left(1+b_{3}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "c4",
+        "folderId": "derived",
+        "color": "#e66100",
+        "latex": "c_{4}=V\\left(1+b_{4}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "c5",
+        "folderId": "derived",
+        "color": "#c01c28",
+        "latex": "c_{5}=V\\left(1+b_{5}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "c6",
+        "folderId": "derived",
+        "color": "#e5a50a",
+        "latex": "c_{6}=V\\left(1+b_{6}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "c7",
+        "folderId": "derived",
+        "color": "#62a0ea",
+        "latex": "c_{7}=V\\left(1+b_{7}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "c8",
+        "folderId": "derived",
+        "color": "#57e389",
+        "latex": "c_{8}=V\\left(1+b_{8}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "c9",
+        "folderId": "derived",
+        "color": "#f66151",
+        "latex": "c_{9}=V\\left(1+b_{9}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "c10",
+        "folderId": "derived",
+        "color": "#99c1f1",
+        "latex": "c_{10}=V\\left(1+b_{10}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "T1",
+        "folderId": "derived",
+        "color": "#26a269",
+        "latex": "T_{1}=\\frac{c_{1}-V}{R}"
+      },
+      {
+        "type": "expression",
+        "id": "T2",
+        "folderId": "derived",
+        "color": "#1c71d8",
+        "latex": "T_{2}=\\frac{c_{2}-V}{R}"
+      },
+      {
+        "type": "expression",
+        "id": "T3",
+        "folderId": "derived",
+        "color": "#613583",
+        "latex": "T_{3}=\\frac{c_{3}-V}{R}"
+      },
+      {
+        "type": "expression",
+        "id": "T4",
+        "folderId": "derived",
+        "color": "#e66100",
+        "latex": "T_{4}=\\frac{c_{4}-V}{R}"
+      },
+      {
+        "type": "expression",
+        "id": "T5",
+        "folderId": "derived",
+        "color": "#c01c28",
+        "latex": "T_{5}=\\frac{c_{5}-V}{R}"
+      },
+      {
+        "type": "expression",
+        "id": "T6",
+        "folderId": "derived",
+        "color": "#e5a50a",
+        "latex": "T_{6}=\\frac{c_{6}-V}{R}"
+      },
+      {
+        "type": "expression",
+        "id": "T7",
+        "folderId": "derived",
+        "color": "#62a0ea",
+        "latex": "T_{7}=\\frac{c_{7}-V}{R}"
+      },
+      {
+        "type": "expression",
+        "id": "T8",
+        "folderId": "derived",
+        "color": "#57e389",
+        "latex": "T_{8}=\\frac{c_{8}-V}{R}"
+      },
+      {
+        "type": "expression",
+        "id": "T9",
+        "folderId": "derived",
+        "color": "#f66151",
+        "latex": "T_{9}=\\frac{c_{9}-V}{R}"
+      },
+      {
+        "type": "expression",
+        "id": "T10",
+        "folderId": "derived",
+        "color": "#99c1f1",
+        "latex": "T_{10}=\\frac{c_{10}-V}{R}"
+      },
+      {
+        "type": "expression",
+        "id": "L1",
+        "folderId": "derived",
+        "color": "#26a269",
+        "latex": "L_{1}=w_{1}c_{1}"
+      },
+      {
+        "type": "expression",
+        "id": "L2",
+        "folderId": "derived",
+        "color": "#1c71d8",
+        "latex": "L_{2}=w_{2}c_{2}"
+      },
+      {
+        "type": "expression",
+        "id": "L3",
+        "folderId": "derived",
+        "color": "#613583",
+        "latex": "L_{3}=w_{3}c_{3}"
+      },
+      {
+        "type": "expression",
+        "id": "L4",
+        "folderId": "derived",
+        "color": "#e66100",
+        "latex": "L_{4}=w_{4}c_{4}"
+      },
+      {
+        "type": "expression",
+        "id": "L5",
+        "folderId": "derived",
+        "color": "#c01c28",
+        "latex": "L_{5}=w_{5}c_{5}"
+      },
+      {
+        "type": "expression",
+        "id": "L6",
+        "folderId": "derived",
+        "color": "#e5a50a",
+        "latex": "L_{6}=w_{6}c_{6}"
+      },
+      {
+        "type": "expression",
+        "id": "L7",
+        "folderId": "derived",
+        "color": "#62a0ea",
+        "latex": "L_{7}=w_{7}c_{7}"
+      },
+      {
+        "type": "expression",
+        "id": "L8",
+        "folderId": "derived",
+        "color": "#57e389",
+        "latex": "L_{8}=w_{8}c_{8}"
+      },
+      {
+        "type": "expression",
+        "id": "L9",
+        "folderId": "derived",
+        "color": "#f66151",
+        "latex": "L_{9}=w_{9}c_{9}"
+      },
+      {
+        "type": "expression",
+        "id": "L10",
+        "folderId": "derived",
+        "color": "#99c1f1",
+        "latex": "L_{10}=w_{10}c_{10}"
+      },
+      {
+        "type": "folder",
+        "id": "slopes",
+        "title": "Slope functions",
+        "collapsed": true
+      },
+      {
+        "type": "expression",
+        "id": "s1n",
+        "folderId": "slopes",
+        "color": "#26a269",
+        "hidden": true,
+        "latex": "s_{1}\\left(r\\right)=\\frac{1}{1+e^{\\frac{r-c_{1}}{T_{1}}}}"
+      },
+      {
+        "type": "expression",
+        "id": "s2n",
+        "folderId": "slopes",
+        "color": "#1c71d8",
+        "hidden": true,
+        "latex": "s_{2}\\left(r\\right)=\\frac{1}{1+e^{\\frac{r-c_{2}}{T_{2}}}}"
+      },
+      {
+        "type": "expression",
+        "id": "s3n",
+        "folderId": "slopes",
+        "color": "#613583",
+        "hidden": true,
+        "latex": "s_{3}\\left(r\\right)=\\frac{1}{1+e^{\\frac{r-c_{3}}{T_{3}}}}"
+      },
+      {
+        "type": "expression",
+        "id": "s4n",
+        "folderId": "slopes",
+        "color": "#e66100",
+        "hidden": true,
+        "latex": "s_{4}\\left(r\\right)=\\frac{1}{1+e^{\\frac{r-c_{4}}{T_{4}}}}"
+      },
+      {
+        "type": "expression",
+        "id": "s5n",
+        "folderId": "slopes",
+        "color": "#c01c28",
+        "hidden": true,
+        "latex": "s_{5}\\left(r\\right)=\\frac{1}{1+e^{\\frac{r-c_{5}}{T_{5}}}}"
+      },
+      {
+        "type": "expression",
+        "id": "s6n",
+        "folderId": "slopes",
+        "color": "#e5a50a",
+        "hidden": true,
+        "latex": "s_{6}\\left(r\\right)=\\frac{1}{1+e^{\\frac{r-c_{6}}{T_{6}}}}"
+      },
+      {
+        "type": "expression",
+        "id": "s7n",
+        "folderId": "slopes",
+        "color": "#62a0ea",
+        "hidden": true,
+        "latex": "s_{7}\\left(r\\right)=\\frac{1}{1+e^{\\frac{r-c_{7}}{T_{7}}}}"
+      },
+      {
+        "type": "expression",
+        "id": "s8n",
+        "folderId": "slopes",
+        "color": "#57e389",
+        "hidden": true,
+        "latex": "s_{8}\\left(r\\right)=\\frac{1}{1+e^{\\frac{r-c_{8}}{T_{8}}}}"
+      },
+      {
+        "type": "expression",
+        "id": "s9n",
+        "folderId": "slopes",
+        "color": "#f66151",
+        "hidden": true,
+        "latex": "s_{9}\\left(r\\right)=\\frac{1}{1+e^{\\frac{r-c_{9}}{T_{9}}}}"
+      },
+      {
+        "type": "expression",
+        "id": "s10n",
+        "folderId": "slopes",
+        "color": "#99c1f1",
+        "hidden": true,
+        "latex": "s_{10}\\left(r\\right)=\\frac{1}{1+e^{\\frac{r-c_{10}}{T_{10}}}}"
+      },
+      {
+        "type": "expression",
+        "id": "a1",
+        "folderId": "slopes",
+        "color": "#26a269",
+        "hidden": true,
+        "latex": "a_{1}\\left(x\\right)=s_{1}\\left(\\frac{x}{w_{1}}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "a2",
+        "folderId": "slopes",
+        "color": "#1c71d8",
+        "hidden": true,
+        "latex": "a_{2}\\left(x\\right)=s_{2}\\left(\\frac{x}{w_{2}}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "a3",
+        "folderId": "slopes",
+        "color": "#613583",
+        "hidden": true,
+        "latex": "a_{3}\\left(x\\right)=s_{3}\\left(\\frac{x}{w_{3}}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "a4",
+        "folderId": "slopes",
+        "color": "#e66100",
+        "hidden": true,
+        "latex": "a_{4}\\left(x\\right)=s_{4}\\left(\\frac{x}{w_{4}}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "a5",
+        "folderId": "slopes",
+        "color": "#c01c28",
+        "hidden": true,
+        "latex": "a_{5}\\left(x\\right)=s_{5}\\left(\\frac{x}{w_{5}}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "a6",
+        "folderId": "slopes",
+        "color": "#e5a50a",
+        "hidden": true,
+        "latex": "a_{6}\\left(x\\right)=s_{6}\\left(\\frac{x}{w_{6}}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "a7",
+        "folderId": "slopes",
+        "color": "#62a0ea",
+        "hidden": true,
+        "latex": "a_{7}\\left(x\\right)=s_{7}\\left(\\frac{x}{w_{7}}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "a8",
+        "folderId": "slopes",
+        "color": "#57e389",
+        "hidden": true,
+        "latex": "a_{8}\\left(x\\right)=s_{8}\\left(\\frac{x}{w_{8}}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "a9",
+        "folderId": "slopes",
+        "color": "#f66151",
+        "hidden": true,
+        "latex": "a_{9}\\left(x\\right)=s_{9}\\left(\\frac{x}{w_{9}}\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "a10",
+        "folderId": "slopes",
+        "color": "#99c1f1",
+        "hidden": true,
+        "latex": "a_{10}\\left(x\\right)=s_{10}\\left(\\frac{x}{w_{10}}\\right)"
+      },
+      {
+        "type": "folder",
+        "id": "folderA",
+        "title": "A — 10 S-curves (normalised r)  OPEN THIS",
+        "collapsed": false
+      },
+      {
+        "type": "text",
+        "id": "atext",
+        "folderId": "folderA",
+        "text": "All coins share target r=V=1000. Cliffs sit at c_i=V(1+b_i). Orange USDe and light-blue U cliff first (b=10%). Green USDT / blue USDC cliff last (b=40%)."
+      },
+      {
+        "type": "expression",
+        "id": "peglines",
+        "folderId": "folderA",
+        "color": "#000000",
+        "lineStyle": "DOTTED",
+        "lineWidth": "2",
+        "latex": "x=V"
+      },
+      {
+        "type": "expression",
+        "id": "half",
+        "folderId": "folderA",
+        "color": "#000000",
+        "lineStyle": "DOTTED",
+        "lineWidth": "1.5",
+        "latex": "y=0.5"
+      },
+      {
+        "type": "expression",
+        "id": "p1",
+        "folderId": "folderA",
+        "color": "#26a269",
+        "lineWidth": "3.5",
+        "latex": "y=s_{1}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "p2",
+        "folderId": "folderA",
+        "color": "#1c71d8",
+        "lineWidth": "3.5",
+        "latex": "y=s_{2}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "p3",
+        "folderId": "folderA",
+        "color": "#613583",
+        "lineWidth": "2.5",
+        "latex": "y=s_{3}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "p4",
+        "folderId": "folderA",
+        "color": "#e66100",
+        "lineWidth": "3.5",
+        "latex": "y=s_{4}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "p5",
+        "folderId": "folderA",
+        "color": "#c01c28",
+        "lineWidth": "2.5",
+        "latex": "y=s_{5}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "p6",
+        "folderId": "folderA",
+        "color": "#e5a50a",
+        "lineWidth": "2.5",
+        "latex": "y=s_{6}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "p7",
+        "folderId": "folderA",
+        "color": "#62a0ea",
+        "lineWidth": "2.5",
+        "latex": "y=s_{7}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "p8",
+        "folderId": "folderA",
+        "color": "#57e389",
+        "lineWidth": "2.5",
+        "latex": "y=s_{8}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "p9",
+        "folderId": "folderA",
+        "color": "#f66151",
+        "lineWidth": "2.5",
+        "latex": "y=s_{9}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "p10",
+        "folderId": "folderA",
+        "color": "#99c1f1",
+        "lineWidth": "3.5",
+        "latex": "y=s_{10}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "lab1",
+        "folderId": "folderA",
+        "color": "#26a269",
+        "latex": "\\left(c_{1},0.5\\right)",
+        "pointSize": "10",
+        "label": "USDT c",
+        "showLabel": true,
+        "labelOrientation": "above"
+      },
+      {
+        "type": "expression",
+        "id": "lab4",
+        "folderId": "folderA",
+        "color": "#e66100",
+        "latex": "\\left(c_{4},0.5\\right)",
+        "pointSize": "10",
+        "label": "USDe c (tight)",
+        "showLabel": true,
+        "labelOrientation": "below"
+      },
+      {
+        "type": "folder",
+        "id": "folderB",
+        "title": "B — absolute $ walls (hide A; zoom x 0–950)",
+        "collapsed": true
+      },
+      {
+        "type": "text",
+        "id": "btext",
+        "folderId": "folderB",
+        "text": "Unhide the a_i curves. USDT wall ~$903M, USDC ~$357M, tiny coins cliff near $6–$25M. Same math, dollar scale."
+      },
+      {
+        "type": "expression",
+        "id": "q1",
+        "folderId": "folderB",
+        "color": "#26a269",
+        "hidden": true,
+        "lineWidth": "3",
+        "latex": "y=a_{1}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "q2",
+        "folderId": "folderB",
+        "color": "#1c71d8",
+        "hidden": true,
+        "lineWidth": "3",
+        "latex": "y=a_{2}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "q4",
+        "folderId": "folderB",
+        "color": "#e66100",
+        "hidden": true,
+        "lineWidth": "3",
+        "latex": "y=a_{4}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "q10",
+        "folderId": "folderB",
+        "color": "#99c1f1",
+        "hidden": true,
+        "lineWidth": "3",
+        "latex": "y=a_{10}\\left(x\\right)"
+      },
+      {
+        "type": "expression",
+        "id": "showL1",
+        "folderId": "folderB",
+        "color": "#26a269",
+        "hidden": true,
+        "lineStyle": "DASHED",
+        "latex": "x=L_{1}"
+      },
+      {
+        "type": "expression",
+        "id": "showL2",
+        "folderId": "folderB",
+        "color": "#1c71d8",
+        "hidden": true,
+        "lineStyle": "DASHED",
+        "latex": "x=L_{2}"
+      },
+      {
+        "type": "expression",
+        "id": "showL4",
+        "folderId": "folderB",
+        "color": "#e66100",
+        "hidden": true,
+        "lineStyle": "DASHED",
+        "latex": "x=L_{4}"
+      },
+      {
+        "type": "expression",
+        "id": "showL10",
+        "folderId": "folderB",
+        "color": "#99c1f1",
+        "hidden": true,
+        "lineStyle": "DASHED",
+        "latex": "x=L_{10}"
+      },
+      {
+        "type": "folder",
+        "id": "legend",
+        "title": "Legend + walls readout ($M)",
+        "collapsed": false
+      },
+      {
+        "type": "text",
+        "id": "legendtext",
+        "folderId": "legend",
+        "text": "1 USDT 175.2B mcap → w=64.5% b=40%. 2 USDC 69.3B → 25.5% b=40%. 3 USDS 5.2B → 1.9% b=30%. 4 USDe 4.8B → 1.8% b=10%. 5 DAI 4.6B → 1.7% b=30%. 6 USD1 2.9B → 1.1% b=20%. 7 RLUSD 2.8B → 1.0% b=30%. 8 USDG 2.6B → 1.0% b=20%. 9 PYUSD 2.5B → 0.9% b=30%. 10 U 1.6B → 0.6% b=10%."
+      },
+      {
+        "type": "expression",
+        "id": "rL1",
+        "folderId": "legend",
+        "color": "#26a269",
+        "latex": "L_{1}"
+      },
+      {
+        "type": "expression",
+        "id": "rL2",
+        "folderId": "legend",
+        "color": "#1c71d8",
+        "latex": "L_{2}"
+      },
+      {
+        "type": "expression",
+        "id": "rL4",
+        "folderId": "legend",
+        "color": "#e66100",
+        "latex": "L_{4}"
+      },
+      {
+        "type": "expression",
+        "id": "rL10",
+        "folderId": "legend",
+        "color": "#99c1f1",
+        "latex": "L_{10}"
+      }
+    ]
+  }
+}
