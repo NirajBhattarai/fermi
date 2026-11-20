@@ -1,111 +1,157 @@
+/* ─── Tokens ─────────────────────────────────────────────────────────── */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  color-scheme: dark;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --bg: #0a0c0f;
+  --surface: #11151a;
+  --surface-2: #171c23;
+  --surface-3: #1e242c;
+  --line: #232a33;
+  --line-strong: #323b46;
+  --text: #ece8df;
+  --text-muted: #9aa1aa;
+  --text-faint: #6b727c;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* the wall: the one accent */
+  --accent: #f5b544;
+  --accent-soft: rgb(245 181 68 / 0.14);
+  --good: #4fd1a5;
+  --good-soft: rgb(79 209 165 / 0.12);
+  --bad: #ff6b5b;
+  --bad-soft: rgb(255 107 91 / 0.12);
+  --focus: #8ab8ff;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* coin series */
+  --c0: #7cb4ff;
+  --c1: #4fd1a5;
+  --c2: #c79bff;
+  --c3: #ff8fb1;
+  --c4: #e6d3a3;
+
+  --on-accent: #1a1203;
+
+  --font-display: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --radius: 14px;
+  --radius-sm: 9px;
+  --shadow: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 12px 32px -18px rgb(0 0 0 / 0.6);
+  /* motion */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-press: 160ms;
+  --dur-ui: 250ms;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+    color-scheme: light;
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+    --bg: #f5f3ee;
+    --surface: #ffffff;
+    --surface-2: #f1eee7;
+    --surface-3: #e9e5dc;
+    --line: #e2ded4;
+    --line-strong: #cfcabe;
+    --text: #15171a;
+    --text-muted: #565b63;
+    --text-faint: #858a92;
+
+    --accent: #a35f00;
+    --accent-soft: rgb(196 120 0 / 0.12);
+    --good: #0b7f59;
+    --good-soft: rgb(11 127 89 / 0.1);
+    --bad: #c2352a;
+    --bad-soft: rgb(194 53 42 / 0.09);
+    --focus: #2a62c9;
+
+    --c0: #2a6fd6;
+    --c1: #0e8a61;
+    --c2: #7b4fd1;
+    --c3: #c63d74;
+    --c4: #8a6a1f;
+
+    --on-accent: #ffffff;
+    --shadow: 0 1px 2px rgb(20 20 20 / 0.04), 0 10px 28px -20px rgb(20 20 20 / 0.25);
   }
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+/* ─── Base ───────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 76px;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 15px/1.55 var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'ss01', 'tnum';
 }
 
 h1,
-h2 {
-  font-family: var(--heading);
+h2,
+h3 {
+  margin: 0;
   font-weight: 500;
-  color: var(--text-h);
+  letter-spacing: -0.01em;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
 p {
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+a {
+  color: inherit;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  padding: 0.1em 0.35em;
+  border-radius: 5px;
+  background: var(--surface-3);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
