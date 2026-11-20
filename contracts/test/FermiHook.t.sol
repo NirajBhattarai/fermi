@@ -140,4 +140,47 @@ contract FermiHookTest is BaseTest {
         int256 drift = Fermi3.invariant(s.params, s.V, s.x) - s.K;
         require(drift >= -1e12, "FermiHook: invariant not preserved after swap");
     }
+
+    function testSwapReverseDirection() public {
+        require(hook.isPoolInitialized(poolId), "FermiHook: pool not initialized");
+
+        // Swap coin1 -> coin0 (reverse of setup ordering)
+        uint256 amountIn = 1e18;
+        BalanceDelta swapDelta = swapRouter.swapExactTokensForTokens({
+            amountIn: amountIn,
+            amountOutMin: 0,
+            zeroForOne: false,
+            poolKey: poolKey,
+            hookData: Constants.ZERO_BYTES,
+            receiver: address(this),
+            deadline: block.timestamp + 1
+        });
+        assertEq(int256(swapDelta.amount1()), -int256(amountIn));
+
+        Fermi3.State memory s = hook.getPoolState(poolId);
+        int256 drift = Fermi3.invariant(s.params, s.V, s.x) - s.K;
+        require(drift >= -1e12, "FermiHook: invariant not preserved after reverse swap");
+    }
+
+    function testSwapExactOut() public {
+        require(hook.isPoolInitialized(poolId), "FermiHook: pool not initialized");
+
+        // Exact-out: receive 5e17 of token1, pay token0 as needed
+        uint256 amountOut = 5e17;
+        BalanceDelta swapDelta = swapRouter.swapTokensForExactTokens(
+            amountOut,
+            1e18, // amountInMax
+            true, // zeroForOne: token0 -> token1
+            poolKey,
+            Constants.ZERO_BYTES,
+            address(this),
+            block.timestamp + 1
+        );
+
+        assertEq(int256(swapDelta.amount1()), int256(amountOut));
+
+        Fermi3.State memory post = hook.getPoolState(poolId);
+        int256 drift = Fermi3.invariant(post.params, post.V, post.x) - post.K;
+        require(drift >= -1e12, "FermiHook: invariant not preserved after exact-out swap");
+    }
 }
